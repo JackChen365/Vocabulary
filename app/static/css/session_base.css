@@ -1,0 +1,35 @@
+ #query_div{
+    display: none;
+    float:left;
+    position: absolute;
+    width:auto;
+    height:auto;
+    background-color: white;
+    text-align: center;
+}
+.title_detail{
+    background-color: #DCDCDC;;
+    padding: 12px;
+    margin-bottom: 0px;
+}
+ .word_detail{
+    display: none;
+    background-color: #EFEFEF;
+    padding: 12px;
+}
+.word_detail p {
+    margin-left: 12px;
+    font-size: 12px;
+    font-family: Microsoft YaHei;
+    font-style: italic;
+    font-weight: bold;
+}
+.word_detail img{
+    width: 16px;
+    height: 16px;
+}
+#sentence_list hr{
+    border:none;
+    border-top:2px ridge transparent;
+    margin: 0px;
+ }

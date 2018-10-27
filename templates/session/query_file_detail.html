@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "session/detail_list_base.html" %}
+{% load admin_static static  %}
+
+{% block javascript %}
+    <link href="{% static "css/session_base.css" %}" rel="stylesheet" type="text/css" />
+    <script src="{% static 'js/session/session_query.js' %}"></script>
+{% endblock %}
+
+{% block session_detail_content %}
+    <input name="session-id" value="{{ session_id }}" type="hidden"/>
+    <input name="session-query-word" value="{% url "session-query-word" %}" type="hidden"/>
+    <input name="session-query-sentence" value="{% url "session-query-sentence" %}" type="hidden"/>
+    {% for session_item in session_sentences %}
+        <p class="title_detail">{{ session_item.sentence|safe }}
+            <a id="detail_link_{{ session_item.index }}" style="margin-left: 36px;font-size: 12px;"
+               onclick="query_sentence_detail('#detail_link_{{ session_item.index }}',
+                       '#div_detail_{{ session_item.index }}',{{ session_id }},{{ file_id }},{{ session_item.index }})" href="javascript:void(0);">Detail</a>
+        </p>
+        <div id="div_detail_{{ session_item.index }}" class="word_detail"></div><hr/>
+    {% endfor %}
+    <div id="query_div" class="box"></div>
+{% endblock %}

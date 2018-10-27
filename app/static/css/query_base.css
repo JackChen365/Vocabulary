@@ -1,0 +1,19 @@
+ .word_detail {
+    width:auto;
+    height:auto;
+    background-color: #DCDCDC;
+}
+ .list-title{
+    background-color: #BCBCBC;
+     padding: 12px;
+     margin: 0px;
+ }
+ .word_detail .word_title{
+    background-color: #DCDCDC;
+     padding: 16px 12px;
+     margin: 0px;
+ }
+ .word_detail .word_content{
+    background-color: #EFEFEF;
+     padding: 12px;
+ }

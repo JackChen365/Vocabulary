@@ -1,0 +1,35 @@
+.d4 form {
+    width: 60%;
+    margin: 0px auto;
+    text-align: center;
+      background: #EFEFEF;
+      border-bottom: 4px solid #DCDCDC;
+}
+.d4 input, .d4 button {
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.d4 input {
+  width: 100%;
+  font-size: 24px;
+    padding: 16px;
+}
+.d4 button {
+  height: 42px;
+  width: 42px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+}
+.d4 button:before {
+  content: "\f178";
+  font-family: FontAwesome;
+  font-size: 20px;
+  color: #be290e;
+}
+.search_link {
+    padding-left: 16px;
+    background: url('../admin/img/icon-viewlink.svg') 0 1px no-repeat;
+}

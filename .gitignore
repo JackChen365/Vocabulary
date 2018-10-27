@@ -1,0 +1,15 @@
+# 忽略本地文件
+media/dict/*
+media/file/*
+media/nltk_data/*
+media/session/*
+media/vocabulary/*
+
+# 忽略项目静态文件
+app/static/dict_resources/*
+app/static/history.json
+
+# 其他
+.idea/*
+venv/*
+conf/*

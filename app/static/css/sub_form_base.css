@@ -1,0 +1,98 @@
+.white-pink {
+    margin-left:auto;
+    margin-right:auto;
+    background: #FFF;
+    padding: 30px 30px 20px 30px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+}
+.white-pink h1 {
+    font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    padding: 0px 0px 10px 40px;
+    display: block;
+    border-bottom: 1px solid #F5F5F5;
+    margin: -10px -30px 10px -30px;
+    color: #969696;
+}
+.white-pink h1>span {
+    display: block;
+    font-size: 11px;
+    color: #C4C2C2;
+}
+.white-pink .form-body {
+    height: 60%;
+    text-align: center;
+}
+.result_info {
+    font-size: 14px;
+    color: #C4C2C2;
+}
+.white-pink li {
+    font-size: 16px;
+    color: #C4C2C2;
+    margin-left: 32px;
+    margin-top: 8px;
+    text-align: left;
+}
+.white-pink label {
+    display: block;
+    margin: 0px 0px 0px;
+    text-align: center;
+}
+.white-pink label>span {
+    float: left;
+    width: 20%;
+    text-align: right;
+    padding-right: 10px;
+    margin-top: 10px;
+    color: #969696;
+}
+.white-pink input[type="text"], .white-pink input[type="password"], .white-pink input[type="email"], .white-pink textarea,.white-pink select{
+    color: #555;
+    width: 70%;
+    padding: 3px 0px 3px 5px;
+    margin-top: 2px;
+    margin-right: 6px;
+    margin-bottom: 16px;
+    border: 1px solid #e5e5e5;
+    background: #fbfbfb;
+    height: 25px;
+    line-height:15px;
+    outline: 0;
+    -webkit-box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+    box-shadow: inset 1px 1px 2px rgba(200,200,200,0.2);
+}
+.white-pink textarea{
+    height:100px;
+    padding: 5px 0px 0px 5px;
+    width: 70%;
+}
+.white-pink .button {
+background: #FFF;
+border: 1.2px solid #EFEFEF;
+padding: 10px 25px 10px 25px;
+color: #333;
+border-radius: 4px;
+}
+.white-pink .button:hover {
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef027d', endColorstr='#ff5bb0');
+    background: #EFEFEF;
+}
+.white-pink .button:active {
+    position:relative;
+    top:1px;
+}
+.white-pink select {
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+    width: 70%;
+    line-height: 15px;
+    height: 30px;
+}
+
+.white-pink a:link,a:visited{
+ text-decoration:none;
+}

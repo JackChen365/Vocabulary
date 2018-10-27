@@ -1,0 +1,9 @@
+{% for sentence_item in session_sentences %}
+    <p class="title_detail">{{ sentence_item.sentence|safe }}
+        <a id="detail_link_{{ sentence_item.index }}" style="margin-left: 36px;font-size: 12px;"
+           onclick="query_sentence_detail('#detail_link_{{ sentence_item.index }}',
+                   '#div_detail_{{ sentence_item.index }}',{{ sentence_item.session.id }},{{ sentence_item.session_file.id }},{{ sentence_item.index }})" href="javascript:void(0);">Detail</a>
+    </p>
+    <div id="div_detail_{{ sentence_item.index }}" class="word_detail"></div><hr/>
+{% endfor %}
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static  %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Query Word</title>
+    <script src="{% static 'js/dict_query.js' %}"></script>
+    <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <link href="{% static "css/base_widget.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/dict/dict_base.css" %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="dict-content" >
+        <div class="search d4" >
+                <input type="hidden" name="study-session-file"  value="{% url "study-session-file" %}">
+                <input type="hidden" name="get-translate-tag"  value="{% url "get-translate-tag" %}">
+                <input type="hidden" name="query-translate-tag"  value="{% url "query-translate-tag" %}">
+                <input type="hidden" name="dict-sort-item"  value="{% url "dict-sort-item" %}">
+                <input type="hidden" name="user-delete-query"  value="{% url "user-delete-query" %}">
+            <form id="search-form" action="{% url "dict-query-word" %}" method="get">{% csrf_token %}
+              <input type="text" placeholder="Search..." id="search_word" name="word"  autofocus>
+                <button type="submit" id="search" style="display: none"/>
+            </form>
+        </div>
+        <div class="right-panel">
+                <div class="query-option-title" >Query Dict</div>
+                <div class="dict-list slides">
+                    {% for dict_item in dict_items %}
+                         {% if forloop.first %}
+                            <div id="{{ dict_item.id }}" class="dict-item-class slide unselectable selected">{{ dict_item.dict_name }}</div>
+                        {% else %}
+                            <div id="{{ dict_item.id }}" class="dict-item-class slide unselectable">{{ dict_item.dict_name }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                    <div class="query-option-title" style="margin-top: 12px">Query Session</div>
+                        <div class="query-session-list">
+                        {% for session_file in session_files %}
+                             {% if session_file.used %}
+                                <div id="{{ session_file.id }}" onclick="set_study_session_file({{ session_file.id }})" id="" class="query-session-class unselectable selected">{{ session_file.name }}</div>
+                            {% else %}
+                                <div id="{{ session_file.id }}" onclick="set_study_session_file({{ session_file.id }})" class="query-session-class unselectable">{{ session_file.name }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                <div class="query-option-title" style="margin-top: 12px">
+                    <span>Query History</span>
+                    <div id="query-history-count" style="float: right;margin-right: 12px;">{{ query_count }}</div>
+                </div>
+                <div  class="query-list">
+                    {% for query_item in query_items %}
+                        {% if forloop.first %}
+                            <div id="query-{{ query_item.source }}" class="query-item-class unselectable selected">
+                                <div class="query-item"><a href="?word={{ query_item.source }}">{{ query_item.source }}</a></div>
+                                <div class="query-item-delete">
+                                    <a onclick='delete_word_history("{{ query_item.source }}","query-{{ query_item.source }}")' href="javascript:;">
+                                        <img src="/media/img/ic_clear.png"/>
+                                    </a>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div id="query-{{ query_item.source }}" class="query-item-class">
+                                <div class="query-item"><a href="?word={{ query_item.source }}">{{ query_item.source }}</a></div>
+                                <div class="query-item-delete">
+                                    <a onclick='delete_word_history("{{ query_item.source }}","query-{{ query_item.source }}")' href="javascript:;">
+                                        <img src="/media/img/ic_clear.png"/>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </div>
+            <div id="query-content" class="dict-result-list" >
+                <div class="space-header" ></div>
+                {% for dict_title, doc_sub_items in doc_items.items %}
+                    <div id="dict-{{ forloop.counter }}" class="dict_content-title">{{ dict_title }}</div>
+                    <div id="dict-{{ forloop.counter }}-content">
+                        {% for doc_item in doc_sub_items %}
+                            <div class="dict-content-item">
+                                {{ doc_item|safe }}
+                                <br/><br/><br/>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="tag-group">
+                {% for tag_item in tag_group %}
+                    {% if word_record and word_record.tag == tag_item %}
+                        <div id="{{ tag_item.tag }}" class="tag-item clicked" style="background-color: {{ tag_item.color }}"></div>
+                    {% else %}
+                        <div id="{{ tag_item.tag }}" class="tag-item" style="background-color: {{ tag_item.color }}"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+</body>
+</html>

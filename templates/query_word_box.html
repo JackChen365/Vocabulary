@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load admin_static static  %}
+<header>
+    <script>
+           function play_uk(sound){
+                new Audio(sound).play();
+            }
+            function play_us(sound){
+                new Audio(sound).play();
+            }
+            function show_hide(word){
+                let desc_div=document.getElementById(word+"_desc")
+                let link_link=document.getElementById(word+"_link")
+                if(desc_div.style.display=="none"){
+                    desc_div.style.display = "block";
+                }else{
+                    desc_div.style.display = "none";
+                }
+                link_link.style.display="none"
+            }
+        </script>
+    <style>
+        #box_content {
+            background-color: white;
+            border: 1px solid #EFEFEF;
+            text-align: left;
+        }
+        #box_content h3{
+            font-size: 14px;
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+        #box_content div{
+            font-size: 12px;
+            padding: 4px 12px;
+        }
+    </style>
+</header>
+<div id="box_content">
+    <div class="site-title">Word Dialog</div>
+    <h3><em><strong>{{ item.word }}</strong></em><strong>[{{ item.frequency }}]</strong>
+            <span>UK:[{{ item.uk_phonetic }}]<a id="uk_play" onclick="play_uk('/media/{{ item.uk_sound }}')"><img src="/media/img/uk.gif" border="0"></a>
+            US:[{{ item.us_phonetic }}]<a id="us_play" onclick="play_us('/media/{{ item.us_sound }}')"><img src="/media/img/us.gif" border="0"></a>
+                {{ item.star }}</span>
+        </h3>
+        <div>{{ item.description|safe }}</div>
+        <div>{{ item.description_html|safe }}</div>
+        <div>
+            <ul >
+                {% for sentence_item in item.sentence %}
+                    <li >{{ sentence_item.sentence }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div> <a id="{{ item.word }}_link" href="javascript:void(0)" onclick="show_hide('{{ item.word }}')">CN</a> </div>
+        <div id="{{ item.word }}_desc" style="display:none;">{{ item.cn_desc |safe }}</div>
+    </div>
+</div>

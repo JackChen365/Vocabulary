@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends "admin/index.html" %}
+{% load static  %}
+ {% block javascript %}
+     <link rel="stylesheet" type="text/css" href="{% static "css/query_base.css" %}">
+     <script src="{% static 'js/file_query.js' %}"></script>
+ {% endblock %}
+
+{% block data_content %}
+    <div id="sentence_list" >
+        <h2 class="list-title">
+            <span>{{ sub_title }}</span>
+        </h2>
+        {% csrf_token %}
+        <input name="query-box" value="{% url "user-query-word-box" %}" type="hidden"/>
+        {% for item in word_items %}
+            <div class="word_detail">
+                <div class="word_title"><em><strong>{{ item.word }}</strong></em> ：
+                        <span>UK:[{{ item.uk_phonetic }}]<a id="uk_play" onclick="play_uk('/media/{{ item.uk_sound }}')"><img src="/media/img/uk.gif" border="0"></a>
+                        US:[{{ item.us_phonetic }}]<a id="us_play" onclick="play_us('/media/{{ item.us_sound }}')"><img src="/media/img/us.gif" border="0"></a>
+                            {{ item.star }}</span>[{{ item.frequency }}]
+                    </div>
+                    <div class="word_content">
+                        <div>{{ item.description }}</div>
+                        <div>{{ item.description_html }}</div>
+                        <div>
+                            <ul >
+                                {% for sentence in item.sentence %}
+                                    <li >{{ sentence }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div> <a id="{{ item.word }}_link" href="javascript:void(0)" onclick="show_hide('{{ item.word }}')">CN</a> </div>
+                        <div id="{{ item.word }}_desc" style="display:none;">{{ item.cn_desc }}</div>
+                    </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="query_div" style="position: absolute;"/>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load i18n admin_static static  %}
+<div id="site_list">
+    {% if app_list %}
+        {% for app in app_list %}
+            <div class="module" >
+            <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}" style="width: 100%">
+            <caption><a href="#" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
+            {% for model in app.models %}
+                <tr>
+                {% if model.admin_url %}
+                    <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                {% else %}
+                    <th scope="row">{{ model.name }}</th>
+                {% endif %}
+
+                {% if model.add_url %}
+                    <td style="width: 10%;;text-align: right"><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
+                {% else %}
+                    <td>&nbsp;</td>
+                {% endif %}
+
+                {% if model.admin_url %}
+                    <td style="width: 10%;text-align: right"><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                {% else %}
+                    <td>&nbsp;</td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+            </table>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>{% trans "You don't have permission to edit anything." %}</p>
+    {% endif %}
+</div>

@@ -1,0 +1,21 @@
+<p >{{ sentence_note }}</p>
+<ul>
+    {% for item in sentence_words %}
+        <li><em><strong>{{ item.word }}</strong></em> [{{ item.frequency }}]
+            <span>UK:[{{ item.uk_phonetic }}]<a id="uk_play" onclick="new Audio('/media/{{ item.uk_sound }}').play();"><img src="/media/img/uk.gif" border="0"></a>
+                US:[{{ item.us_phonetic }}]<a id="us_play" onclick="new Audio('/media/{{ item.us_sound }}').play();"><img src="/media/img/us.gif" border="0"></a>
+                    {{ item.star }}
+            </span>
+            {% if item.is_user_word  %}
+                <img src="/media/img/ic_thumb_up.png"/>
+            {% else %}
+                <img src="/media/img/ic_thumb_down.png"/>
+            {% endif %}
+            {% if item.high_frequency  %}
+                <img src="/media/img/ic_favorite_grey.png"/>
+            {% else %}
+                <img src="/media/img/ic_favorite_outline.png"/>
+            {% endif %}
+         </li>
+    {% endfor %}
+</ul>

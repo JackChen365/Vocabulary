@@ -1,0 +1,65 @@
+{% extends "admin/index.html" %}
+{% load static  %}
+{% block javascript %}
+    {# JQUERY FILE UPLOAD SCRIPTS #}
+    <link href="{% static "css/base_widget.css" %}" rel="stylesheet" type="text/css" />
+    <script src="{% static 'js/jquery-file-upload/vendor/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'js/jquery-file-upload/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'js/jquery-file-upload/jquery.fileupload.js' %}"></script>
+    <script src="{% static 'UploadMulti/js/progress-bar-upload.js' %}"></script>
+{% endblock %}
+{% block data_content %}
+<div >
+    <div class="alert alert-danger">Please Input Session Title!</div>
+    <div class="site-title">Session Data</div>
+    <div style="margin-top: 12px">
+        <div class="input-group" style="width: 360px;float: left" >
+			<span class="input-group-addon">Title</span>
+            <input type="text" class="form-control" placeholder="Input Session Title">
+		</div>
+        <button type="button" class="btn btn-primary js-upload-sessions" style="float: right">
+            <span class="glyphicon glyphicon-cloud-upload"></span> Upload session
+        </button>
+    </div>
+    {% csrf_token %}
+    <input id="fileupload" type="file" name="file" multiple
+           style="display: none;"
+           data-url="{% url 'session-upload-file' %}"
+           data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'>
+</div><hr style="border:none;"/>
+<table id="session_table" class="table table-bordered" >
+    <thead>
+        <tr>
+            {% for header in session_table.headers %}
+                <th >{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody >
+            {% for session in session_table.data %}
+            <tr>
+                <td style="font-weight: bold"><a href="/session/query/detail/{{ session.id }}/0/">{{ session.title }}</a></td>
+                <td >{{ session.finished }}</td>
+                <td >{{ session.ct  | date:'Y-n-d H:i ' }}
+                <td ><a href="{% url "session-search-sentence" %}?id={{ session.id }}" class="search_link">Search</a></td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+
+
+<div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Uploading...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

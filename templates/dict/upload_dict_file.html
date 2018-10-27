@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "admin/index.html" %}
+{% load static  %}
+
+{% block javascript %}
+    <script src="{% static 'js/dict/upload_dict.js' %}"></script>
+{% endblock %}
+
+{% block data_content %}
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <div>
+        <div class="site-title">Upload Dict</div>
+        <form enctype="multipart/form-data">{% csrf_token %}
+            <input name="dict-upload-file" value="{% url "dict-upload-file" %}"  type="hidden">
+                <input id="mdx_file" type="file"  style="display: none" placeholder="Select a source file" />
+                <input id="mdd_file" type="file"  style="display: none" placeholder="Select a source file" />
+                <div id="mdx_file_div" class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+                    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+                    <h3>Click here to choose mdx file!</h3>
+                </div>
+                <div id="mdd_file_div" class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+                    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+                    <h3>Click here to choose mdd file!</h3>
+                </div>
+            <button id='upload_file' type="button" class="btn btn-primary js-upload-sessions" style="float: right">
+            <span class="glyphicon glyphicon-cloud-upload"></span> Upload file
+            </button>
+        </form>
+    </div>
+
+    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Uploading...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

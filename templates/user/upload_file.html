@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% extends "admin/index.html" %}
+{% load static  %}
+
+{% block javascript %}
+    <script src="{% static 'js/user/user_upload.js' %}"></script>
+{% endblock %}
+
+{% block data_content %}
+    <div>
+        <div class="site-title">Upload File</div>
+        <form enctype="multipart/form-data">{% csrf_token %}
+                <input name="export_file" value="{% url "user-upload-file" %}" type="hidden"  />
+                <input id="export_file" type="file"  style="display: none" placeholder="Select a source file" />
+                <input id="unknown_file" type="file"  style="display: none" placeholder="Select a source file" />
+                <div id="export_file_div" class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+                    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+                    <h3>Click here to choose source file!</h3>
+                </div>
+                <div id="unknown_file_div" class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+                    <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
+                    <h3>Click here to choose unknown file!</h3>
+                </div>
+            <button id='upload_file' type="button" class="btn btn-primary js-upload-sessions" style="float: right">
+            <span class="glyphicon glyphicon-cloud-upload"></span> Upload file
+            </button>
+        </form>
+    </div>
+
+    <div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+            </div>
+            <div class="modal-body">
+                己提交上传文件，正在后台处理，请等待
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

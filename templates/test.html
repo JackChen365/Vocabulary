@@ -1,0 +1,49 @@
+<html>
+<head>
+	<title>测试</title>
+	<script>
+		　　var testDiv = document.getElementById("testDiv");
+        　　　testDiv.onmouseup = function(){
+        　　　　　var selectionObj = null, rangeObj = null, selectedText = "", selectedHtml = "";
+        　　　　　if(window.getSelection){
+        　　　　　　　selectionObj = window.getSelection();
+        　　　　　　　selectedText = selectionObj.toString();
+        　　　　　　　rangeObj = selectionObj.getRangeAt(0);
+        　　　　　　　var docFragment = rangeObj.cloneContents();
+        　　　　　　   var tempDiv = document.createElement("div");
+        　　　　　　　tempDiv.appendChild(docFragment);
+        　　　　　　　selectedHtml = tempDiv.innerHTML;
+        　　　　　}else if(document.selection){
+        　　　　　　　selectionObj = document.selection;
+        　　　　　　　rangeObj = selectionObj.createRange();
+        　　　　　　　selectedText = rangeObj.text;
+        　　　　　　　selectedHtml = rangeObj.htmlText;
+        　　　　　}
+        　　　　　alert(selectedText);
+        　　　　　alert(selectedHtml);
+        　　　};
+	</script>
+</head>
+	<body>
+        <div id="testDiv">
+            我是展示的第一部分
+            <div id="show_desc" >我是隐藏的一部分</div>
+            Elementary - Difﬁcult Customer (B0001)
+            A: Good evening. My name is Fabio, I’ll be your
+            waiter for tonight. May I take your order?
+
+            B: No, I’m still working on it. This menu is not even
+            in English. What’s good here?
+
+            A: For you sir, I would recommend spaghetti and
+            meatballs.
+
+            B: Does it come with coke and fries?
+            A:
+            It comes with either soup or salad and a compli-
+            mentary glass of wine, Sir.
+            B:
+	    </div>
+    </body>
+	</body>
+</html>

@@ -1,0 +1,81 @@
+/* LOGIN FORM */
+
+body.register {
+    background: #f8f8f8;
+}
+
+.register #header {
+    height: auto;
+    padding: 5px 16px;
+}
+
+.register #header h1 {
+    font-size: 18px;
+}
+
+.register #header h1 a {
+    color: #fff;
+}
+
+.register #content {
+    padding: 20px 20px 0;
+}
+
+.register #container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 28em;
+    min-width: 300px;
+    margin: 100px auto;
+}
+
+.register #content-main {
+    width: 100%;
+}
+
+.register .form-row {
+    padding: 4px 0;
+    float: left;
+    width: 100%;
+    border-bottom: none;
+}
+
+.register .form-row label {
+    padding-right: 0.5em;
+    line-height: 2em;
+    font-size: 1em;
+    clear: both;
+    color: #333;
+}
+
+.register .form-row #id_username,
+.register .form-row #id_email,
+.register .form-row #id_password1,
+.register .form-row #id_password2{
+    clear: both;
+    padding: 8px;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.register span.help {
+    font-size: 10px;
+    display: block;
+}
+
+.register .submit-row {
+    clear: both;
+    padding: 1em 0 0 9.4em;
+    margin: 0;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
+.register .password-reset-link {
+    text-align: center;
+}

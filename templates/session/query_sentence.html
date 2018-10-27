@@ -1,0 +1,57 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrastyle %}
+    <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
+     <link rel="stylesheet" type="text/css" href="{% static "css/base_widget.css" %}">
+     <link href="{% static "css/session_base.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/form_base.css' %}" rel="stylesheet">
+    <script src="{% static 'js/session/session_query.js' %}"></script>
+    <script>
+    $('#search_word').bind('keypress', function(event) {
+        if (event.keyCode == "13") {
+            event.preventDefault();
+            $('#search').click();
+        }
+    });
+    function search_sentence() {
+        console.info("form submitted!")  // sanity check
+        $("#sentence_list").html("");
+        $.ajax({
+            url : "{% url 'session-search-sentence' %}",
+            type : "POST", // http method
+            data : $('#search-form').serialize(), // data sent with the post request
+            dataType: "html",
+            // handle a successful response
+            success : function(data) {
+                $('#search_word').val(''); // remove the value from the input
+                $('#sentence_list').prepend(data)
+                console.log(data); // log the returned json to the console
+                console.log("success"); // another sanity check
+            },
+            // handle a non-successful response
+            error : function() {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            }
+        });
+    }
+    </script>
+{% endblock %}
+{% block content %}
+    <div id="content-main" >
+      {% regroup book_list|dictsort:"publisher.name" by publisher as books_by_publisher %}
+        <input name="session-id" value="{{ session_id }}" type="hidden"/>
+        <input name="session-query-word" value="{% url "session-query-word" %}" type="hidden"/>
+        <input name="session-query-sentence" value="{% url "session-query-sentence" %}" type="hidden"/>
+        <div class="search d4" >
+            <div id="results"></div>
+            <form id="search-form" onsubmit="return false" method="post">{% csrf_token %}
+              <input type="text" placeholder="Search..." id="search_word" name="word">
+                <input type="text" name="id" value="{{ session_id }}" style="display: none">
+                <button type="submit" id="search" onclick="search_sentence()" style="display: none"/>
+            </form>
+        </div>
+        <div id="sentence_list" style="margin-top: 24px"/>
+    </div>
+    <div id="query_div" style="position: absolute;" />
+{% endblock %}
