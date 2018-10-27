@@ -13,3 +13,4 @@ app/static/history.json
 .idea/*
 venv/*
 conf/*
+db.sqlite3
