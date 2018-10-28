@@ -8,3 +8,9 @@
 
 
 2: 重新设计分析器，将以前srt/pdf/txt做成配置模板
+
+其他功能待准备
+2：增加一个最近搜索记录
+3：epub支持：https://github.com/aerkalov/ebooklib
+	epub在线阅读:https://github.com/aerkalov/ebook-web-reader
+4：mobi格式支持：https://github.com/kroo/mobi-python
