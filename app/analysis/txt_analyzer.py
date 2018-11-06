@@ -18,7 +18,8 @@ class TxtAnalyzer(Analyzer):
     def resolve_txt(self):
         """解析txt文件"""
         items = []
-        with open(self.file_path, 'r', errors='ignore') as f:
+        encoding = self.get_encoding(self.file_path)
+        with open(self.file_path, 'r', encoding=encoding, errors='ignore') as f:
             for line in f.readlines():
                 if line.strip():
                     items.append(QuerySentence(line.strip()))

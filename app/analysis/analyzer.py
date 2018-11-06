@@ -1,6 +1,7 @@
 import re
 from abc import abstractmethod
 
+import chardet
 import nltk
 
 
@@ -55,6 +56,12 @@ class Analyzer(object):
     @abstractmethod
     def get_sentence(self):
         pass
+
+    @staticmethod
+    def get_encoding(file):
+        # 二进制方式读取，获取字节数据，检测类型
+        with open(file, 'rb') as f:
+            return chardet.detect(f.read())['encoding']
 
     @staticmethod
     def get_wordnet_pos(treebank_tag):

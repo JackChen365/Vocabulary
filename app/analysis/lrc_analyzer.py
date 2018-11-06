@@ -22,7 +22,8 @@ class LrcAnalyzer(Analyzer):
         items = []
         # 00:41:29,840 --> 00:41:29,840
         pattern = re.compile("(?P<time>\[.+?\])(?P<en>[\x00-\x7F]+)?\s?(?P<cn>.+)?")
-        with open(self.file_path, 'r', encoding="utf-8", errors='ignore') as f:
+        encoding = self.get_encoding(self.file_path)
+        with open(self.file_path, 'r', encoding=encoding, errors='ignore') as f:
             for line in f.readlines():
                 if line.strip():
                     matcher = pattern.search(line.strip())

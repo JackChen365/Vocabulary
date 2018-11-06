@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from app.analysis.lrc_analyzer import LrcAnalyzer
+from app.analysis.md_srt_analyzer import MdSrtAnalyzer
 from app.analysis.pdf_analyzer import PdfAnalyzer
 from app.analysis.srt_analyzer import SrtAnalyzer
 from app.analysis.txt_analyzer import TxtAnalyzer
@@ -15,7 +16,7 @@ from vocabulary.settings import MEDIA_ROOT
 
 def get_analyzer(file_path):
     if file_path.endswith("srt"):
-        return SrtAnalyzer(file_path)
+        return MdSrtAnalyzer(file_path)
     elif file_path.endswith("pdf"):
         return PdfAnalyzer(file_path)
     elif file_path.endswith("lrc"):

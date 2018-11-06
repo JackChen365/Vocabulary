@@ -3,17 +3,10 @@ import re
 import nltk
 from nltk.tokenize import word_tokenize
 from app.analysis.analyzer import Analyzer, QueryItem, QuerySentence
+from app.analysis.srt_analyzer import SrtItem
 
 
-class SrtItem(object):
-    def __init__(self, number):
-        self.number = number
-        self.time = None
-        self.sentence = str()
-        self.note = None
-
-
-class SrtAnalyzer(Analyzer):
+class MdSrtAnalyzer(Analyzer):
     """视频srt文件分析器"""
 
     def __init__(self, file_path):
@@ -29,6 +22,7 @@ class SrtAnalyzer(Analyzer):
         """解析srt文件"""
         items = []
         # 00:41:29,840 --> 00:41:29,840
+        pattern = re.compile(r"(\{.+\})?(\<.+\>)?(?P<CN>.+)\n(?P<EN>.+)\n")
         encoding = self.get_encoding(self.file_path)
         with open(self.file_path, 'r', encoding=encoding, errors='ignore') as f:
             index = 0
@@ -52,8 +46,12 @@ class SrtAnalyzer(Analyzer):
                         item.time = srt_l
                 else:
                     if srt_l.strip():
-                        item.sentence += srt_l
+                        item.sentence += srt_l + "\n"
                     else:
+                        matcher = pattern.match(re.sub(r'{.+}<.+>', "-", item.sentence))
+                        if matcher:
+                            item.sentence = matcher.group("EN")
+                            item.note = matcher.group("CN")
                         index = 0
                         continue
                 index += 1
@@ -67,4 +65,4 @@ class SrtAnalyzer(Analyzer):
     def get_sentence(self):
         # 解析文件
         items = self.resolve_srt()
-        return [QuerySentence(item.sentence, time=item.time) for item in items]
+        return [QuerySentence(item.sentence, note=item.note, time=item.time) for item in items]
