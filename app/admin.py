@@ -62,6 +62,7 @@ class VocabularySites(AdminSite):
                    OptionItem("Query Data", "query/file/", "query file(pdf/srt) to study!"), ]
         extra_context = {
             "title": "Data",
+            "session_list": ImportSession.objects.filter(user=request.user),
             "options": TableList("Extras", headers=["option", "description"], data=options)
         }
         # 如果用户登录

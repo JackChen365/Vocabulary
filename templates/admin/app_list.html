@@ -1,4 +1,25 @@
 {% load i18n admin_static static  %}
+<div id="session_list">
+    {% if session_list %}
+        {% csrf_token %}
+        <input type="hidden" name="study-session-item" value="{% url "study-session-item" %}"/>
+        <div class="module" >
+        <table style="width: 100%">
+        <caption><a href="/admin/app/importsession/" class="section">User Session</a></caption>
+        {% for item in session_list %}
+            {% if item.used %}
+                <tr id="{{ item.id }}" class="session-item-class selected">
+            {% else %}
+                <tr id="{{ item.id }}" class="session-item-class" >
+            {% endif %}
+                    <th scope="row"><a href="/admin/app/importsession/{{ item.id }}/change/">{{ item.title }}</a></th>
+                    <td style="width: 6%;text-align: center;vertical-align: middle;">{{ item.finished }}</td>
+                </tr>
+        {% endfor %}
+        </table>
+        </div>
+    {% endif %}
+</div>
 <div id="site_list">
     {% if app_list %}
         {% for app in app_list %}

@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from app.session.views import UploadSession, SearchSentence, query_session_word, query_session_list, \
-    query_session_sentence, SessionDetailView, study_session_file, remove_all_session
+    query_session_sentence, SessionDetailView, study_session_file, remove_all_session, study_session_item
 
 urlpatterns = [
     url('^upload/file/$', UploadSession.as_view(), name="session-upload-file"),
@@ -12,4 +12,5 @@ urlpatterns = [
     url('^query/detail/(\d+)/(\d+)/$', SessionDetailView.as_view(), name="session-query-detail"),
     url('^study/file/$', study_session_file, name="study-session-file"),
     url('^remove/all/$', remove_all_session, name="remove-all_session"),
+    url('^study/session/item/$', study_session_item, name="study-session-item"),
 ]

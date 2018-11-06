@@ -286,3 +286,21 @@ def remove_all_session(request):
     elif request.method == "GET":
         ImportSession.objects.filter(user=request.user).all().delete()
         return HttpResponse("ok!")
+
+
+def study_session_item(request):
+    if not request.user.is_authenticated:
+        return redirect('/admin/login/?next=%s' % request.path)
+    elif request.method == "POST":
+        session_id = request.POST.get("id")
+        try:
+            session_item = ImportSession.objects.get(user=request.user, used=True)
+            session_item.used=False
+            session_item.save()
+            new_session_item = ImportSession.objects.get(user=request.user, id=session_id)
+            new_session_item.used = True
+            new_session_item.save()
+        except ImportSession.DoesNotExist:
+            return JsonResponse(data={'is_valid': False, "message": "Session not existed!"})
+        else:
+            return JsonResponse(data={'is_valid': True})

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 
 from app.models import Vocabulary
-from app.user.models import SentenceRelative, SentenceKeyword, ImportRecord, UserVocabulary
+from app.user.models import SentenceRelative, SentenceKeyword, ImportRecord, UserVocabulary, QueryWordTag
 
 
 class UserVocabularyAdmin(admin.ModelAdmin):
@@ -53,20 +53,37 @@ class ImportRecordAdmin(admin.ModelAdmin):
         return obj.user == request.user
 
 
+class SentenceRelativeInlineForm(forms.ModelForm):
+    readonly_fields = ["source", "target"]
+    exclude = ["source", "target"]
+
+
 class SentenceRelativeInline(admin.StackedInline):
     model = SentenceRelative
+    form = SentenceRelativeInlineForm
     extra = 0
+
+    # def get_formset(self, request, obj=None, **kwargs):
+    #     formset= super().get_formset(request, obj, **kwargs)
+    #     formset.form.bash_fields[""]
+
+
+class SentenceKeywordInlineForm(forms.ModelForm):
+    readonly_fields = ["key", "info"]
+    exclude = ["key", "info"]
 
 
 class SentenceKeywordInline(admin.StackedInline):
     model = SentenceKeyword
+    form = SentenceKeywordInlineForm
     extra = 0
 
 
 class QueryTranslateRecordAdmin(admin.ModelAdmin):
     list_display = ["source", "target"]
 
-    # readonly_fields = ["ct"]
+    readonly_fields = ["target", "uk_phonetic", "us_phonetic", "translate", "session_file", "tag", "ct", "frequency"]
+
     # inlines = (SentenceRelativeInline, SentenceKeywordInline)
 
     def save_model(self, request, obj, form, change):
@@ -86,12 +103,17 @@ class QueryTranslateRecordAdmin(admin.ModelAdmin):
         # Proper kwargs are form, fields, exclude, formfield_callback
         if obj:
             if "inner" != obj.source_from:
-                kwargs['exclude'] = ['source_from', "user"]
+                kwargs['exclude'] = ["target", "uk_phonetic", "us_phonetic", "translate", 'source_from', "user",
+                                     "session_file", "frequency", "tag", "ct"]
                 self.inlines = (SentenceRelativeInline, SentenceKeywordInline)
             else:
                 self.inlines = ()
-                kwargs['exclude'] = ['source_from', 'target', "uk_phonetic", "us_phonetic", "translate", "user"]
-        return super(QueryTranslateRecordAdmin, self).get_form(request, obj, **kwargs)
+                kwargs['exclude'] = ["target", "uk_phonetic", "us_phonetic", "translate", 'source_from', 'target',
+                                     "uk_phonetic", "us_phonetic", "translate", "user",
+                                     "session_file", "frequency", "tag", "ct"]
+        form = super(QueryTranslateRecordAdmin, self).get_form(request, obj, **kwargs)
+        # form.base_fields["tag"].queryset = QueryWordTag.objects.filter(user=request.user)
+        return form
 
 
 class SentenceRelativeAdmin(admin.ModelAdmin):

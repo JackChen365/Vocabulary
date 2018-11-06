@@ -4,8 +4,10 @@
 {% block extrastyle %}{{ block.super }}
     <script src="{% static 'js/jquery-3.2.0.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/index_base.js' %}"></script>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/form_base.css' %}" rel="stylesheet">
+    <link href="{% static 'css/index_base.css' %}" rel="stylesheet"/>
     {% block javascript %}
     {% endblock %}
 {% endblock %}

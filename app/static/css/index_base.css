@@ -1,0 +1,5 @@
+.session-item-class{
+}
+.session-item-class.selected{
+    background-color: #EFEFEF;
+}

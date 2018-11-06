@@ -19,7 +19,7 @@ class ImportSession(models.Model):
         return "系列记录:%s[%s]" % (self.title, self.export_id)
 
     class Meta:
-        ordering = ["ct"]
+        ordering = ["title"]
         verbose_name = "导入系列"
         verbose_name_plural = "导入系列"
 

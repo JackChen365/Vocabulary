@@ -271,4 +271,5 @@ window.onload=function(){
     set_drag_sort()
     //set window paste
     document.onpaste = onWindowPaste;
+    window.addEventListener("focus",()=>document.getElementById("search_word").focus())
 }
