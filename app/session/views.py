@@ -69,8 +69,8 @@ class UploadSession(View):
                 print("%s系列 文件上传:%s 成功 总个数:%s 个数：%d" %
                       (title, upload_file.name, file_length, session.session_files.count()))
                 # 加入异步执行队列
-                # session_task.delay(export_id)
-                session_task(export_id)
+                session_task.delay(export_id)
+                # session_task(export_id)
                 data["is_finished"] = True
         else:
             data = {'is_valid': False}

@@ -126,7 +126,6 @@ class QueryTranslateRecordAdmin(admin.ModelAdmin):
     actions = ['export_sentence']
     # 列表过滤器
     list_filter = (RecordTagFilter, RecordDateFilter)
-    list_per_page = 3
 
     readonly_fields = ["target", "uk_phonetic", "us_phonetic", "translate", "session_file", "tag", "ct", "frequency"]
 
