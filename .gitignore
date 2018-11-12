@@ -4,6 +4,7 @@ media/file/*
 media/nltk_data/*
 media/session/*
 media/vocabulary/*
+media/tmp/*
 
 # 忽略项目静态文件
 app/static/dict_resources/*
