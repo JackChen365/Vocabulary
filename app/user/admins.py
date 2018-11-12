@@ -1,8 +1,15 @@
+import os
+from datetime import datetime
+
 from django.contrib import admin
 from django import forms
+from django.contrib import messages
+from django.db.models import Q
+from django.http import HttpResponse
 
 from app.models import Vocabulary
-from app.user.models import SentenceRelative, SentenceKeyword, ImportRecord, UserVocabulary
+from app.user.models import SentenceRelative, SentenceKeyword, ImportRecord, UserVocabulary, QueryWordTag
+from vocabulary.settings import MEDIA_ROOT
 
 
 class UserVocabularyAdmin(admin.ModelAdmin):
@@ -63,8 +70,46 @@ class SentenceKeywordInline(admin.StackedInline):
     extra = 0
 
 
+class RecordTagFilter(admin.SimpleListFilter):
+    """为订单增加月份过滤器"""
+    title = u'Tag Filter'
+    parameter_name = 'tag_filter'
+
+    def lookups(self, request, model_admin):
+        word_tags = QueryWordTag.objects.filter(user=request.user)
+        return ((tag.tag, tag) for tag in word_tags)
+
+    def queryset(self, request, queryset):
+        if not self.value():
+            return queryset
+        else:
+            today = datetime.now().date()
+            word_tag = QueryWordTag.objects.get(user=request.user, tag=self.value())
+            return queryset.filter(Q(tag=word_tag) & Q(ct__date=today))
+
+
+class RecordDateFilter(admin.SimpleListFilter):
+    title = u'Date Filter'
+    parameter_name = 'date_filter'
+
+    def lookups(self, request, model_admin):
+        today = datetime.now().date()
+        return (today.strftime("%Y-%m-%d"), today),
+
+    def queryset(self, request, queryset):
+        if not self.value():
+            return queryset
+        else:
+            today = datetime.now().date()
+            return queryset.filter(ct__date=today)
+
+
 class QueryTranslateRecordAdmin(admin.ModelAdmin):
     list_display = ["source", "target"]
+    actions = ['export_sentence']
+    # 列表过滤器
+    list_filter = (RecordTagFilter, RecordDateFilter)
+    list_per_page = 3
 
     # readonly_fields = ["ct"]
     # inlines = (SentenceRelativeInline, SentenceKeywordInline)
@@ -92,6 +137,19 @@ class QueryTranslateRecordAdmin(admin.ModelAdmin):
                 self.inlines = ()
                 kwargs['exclude'] = ['source_from', 'target', "uk_phonetic", "us_phonetic", "translate", "user"]
         return super(QueryTranslateRecordAdmin, self).get_form(request, obj, **kwargs)
+
+    def export_sentence(self, request, queryset):
+        if 0 == len(queryset):
+            messages.error(request, 'nothing need to do!.')
+        else:
+            content = os.linesep.join([item.source for item in queryset])
+            response = HttpResponse(content)
+            response['Content-Disposition'] = 'attachment; filename="%s.txt"' % datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+            response['Content-Type'] = 'application/txt'
+            return response
+
+    export_sentence.short_description = 'Export Selected Record'
+    export_sentence.short_description = "Export Record"
 
 
 class SentenceRelativeAdmin(admin.ModelAdmin):

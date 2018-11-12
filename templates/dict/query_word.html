@@ -18,7 +18,8 @@
                 <input type="hidden" name="query-translate-tag"  value="{% url "query-translate-tag" %}">
                 <input type="hidden" name="dict-sort-item"  value="{% url "dict-sort-item" %}">
                 <input type="hidden" name="user-delete-query"  value="{% url "user-delete-query" %}">
-            <form id="search-form" action="{% url "dict-query-word" %}" method="get">{% csrf_token %}
+                {% csrf_token %}
+            <form id="search-form" action="{% url "dict-query-word" %}" method="get">
               <input type="text" placeholder="Search..." id="search_word" name="word"  autofocus>
                 <button type="submit" id="search" style="display: none"/>
             </form>
